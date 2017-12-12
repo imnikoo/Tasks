@@ -1,0 +1,42 @@
+{
+  "name": "Notes",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "concurrently": "^3.5.1",
+    "mocha": "^4.0.1",
+    "react-scripts": "^1.0.17"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "classnames": "^2.2.5",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.4",
+    "morgan": "^1.9.0",
+    "node-cache": "^4.1.1",
+    "q": "^1.5.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.1.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "next",
+    "react-transition-group": "^2.2.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "sanitize.css": "^5.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "watch-all": "concurrently \"npm run start\" \"nodemon ./server\""
+  },
+  "homepage": "localhost:3000/",
+  "proxy": "http://localhost:9000/"
+}

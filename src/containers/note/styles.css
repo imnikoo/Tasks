@@ -1,0 +1,53 @@
+.note {
+    width: 85%;
+    height: 85%;
+
+    display: flex;
+    flex-flow: column;
+}
+
+.note__title {
+    align-self: center;
+    font-size: 32px;
+    padding: 8px 8px 8px 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #81C784;
+    background-color: #C8E6C9;
+    width: 100%;
+}
+
+.note__title--input {
+    border: none;
+    width: 100%;
+    font-style: oblique;
+    font-weight: 500;
+    padding: 0;
+}
+
+.note__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #81C784;
+    padding: 8px;
+    font-size: 24px;
+}
+
+.note__content--textarea {
+    flex: 1 1 auto;
+    resize: none;
+    border:none;
+    outline: none !important;
+}
+
+.note-actions {
+    display: flex;
+}
+
+.note-actions--save {
+}
+.note-actions--discard-changes {
+}
+.note-actions--delete {
+    margin-left: auto;
+}

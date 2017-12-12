@@ -1,0 +1,75 @@
+.workplace {
+    display: grid;
+    width: 65%;
+    height: 65%;
+}
+
+.notes-container {
+    overflow-y: auto;
+}
+
+.all-notes {
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+}
+
+.all-notes__title {
+    background-color: #C8E6C9;
+    width: 100%;
+    align-self: center;
+    font-size: 20px;
+    padding: 8px 8px 8px 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #81C784;
+}
+
+.all-notes__container {
+    padding: 8px;
+
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: auto;
+
+    border-bottom: 1px solid #81C784;
+}
+
+.all-notes__container__note {
+    height: 200px;
+    width: 200px;
+    margin: 8px;
+    border-radius: 2px;
+
+    display: grid;
+    grid-template-rows: 40px 160px;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.all-notes__container__note:hover {
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.20), 0 6px 10px rgba(0, 0, 0, 0.22);
+}
+
+.all-notes__container__note--title {
+    background-color: #81C784;
+    font-size: 16px;
+    padding: 8px;
+    font-weight: 500;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.all-notes__container__note--content {
+    padding: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
