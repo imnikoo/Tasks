@@ -26,9 +26,10 @@ const post = (req, res) => {
    let project = new Project();
    project.name = req.body.name;
    project.client = req.body.client;
+   project.status = req.body.status;
    project.projectType = req.body.projectType;
-   project.teamId = req.body.teamId;
    project.tasks = req.body.tasks;
+   project.team = req.body.team;
    project.startedAt = req.body.startedAt;
    project.finishedAt = req.body.finishedAt;
    project.income = req.body.income;
