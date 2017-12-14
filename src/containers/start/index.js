@@ -23,18 +23,21 @@ class Start extends Component {
             <FadeIn in={this.state.show}>
                 <div className="landing-container">
                     <div className="introduction">
-                        <span className="introduction__app-name">Notes</span>
+                        <span className="app-name">
+                           <span className="app-name__first-part"><span className="purple-color">P</span>roject</span>
+                           <span className="app-name__second-part"><span className="purple-color">M</span>anaging</span>
+                        </span>
                         <span className="app-description">
-               Welcome to the <span className="app-description__app-name">Notes</span>.
-               This application helps you to stay on a short leg with your notes, information you need to save and use.
-               You can create notes, change it, open whenever you want.
-               <br/><span className="app-description__app-name">Notes</span> is Future.
-            </span>
+                           Welcome to the <span className="purple-color bold">Project managing</span>.
+                           This application gives you a strong control of your brand new application.
+                           To control your tasks and handle your time properly.
+                        </span>
                     </div>
-                    <div className="actions">
-                        <div className="actions__sign-up" onClick={this.props.registrationPage}/>
-                        <div className="actions__sign-in" onClick={this.props.logInPage}/>
-                    </div>
+                   <div className="main-actions">
+                      <button className="button main-actions__new-project">New project</button>
+                      <button className="button main-actions__current-projects">Current projects</button>
+                      <button className="button main-actions__manage-staff">Manage staff</button>
+                   </div>
                 </div>
             </FadeIn>)
     }
@@ -53,8 +56,8 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     goBack,
-    registrationPage: () => push('/registration'),
-    logInPage: () => push('/login')
+    //registrationPage: () => push('/registration'),
+    //logInPage: () => push('/login')
 }, dispatch);
 
 export default connect(

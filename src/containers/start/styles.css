@@ -10,82 +10,66 @@
     padding-bottom: 16px;
     align-self: center;
 }
-.introduction__app-name {
+.app-name {
+    font-family: Roboto;
+    font-size: 70px;
     font-weight: bold;
-    color: #388E3C;
-    font-size: 62px;
+    display: flex;
+    flex-flow: column;
+    line-height: 1;
+    text-transform: uppercase;
+    font-style: oblique;
     padding-bottom: 16px;
+}
+
+.purple-color {
+    color: #3F51B5;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .app-description {
     font-size: 22px;
 }
-.app-description__app-name {
-    font-weight: bold;
-    color: #388E3C;
+
+.main-actions {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #7986CB;
+    border-top: 1px solid#3F51B5;
+    border-bottom: 1px solid#3F51B5;
+    font-size: 24px;
+    padding: 26px;
+    color: white;
 }
 
-.actions {
-    display: grid;
-    height: 200px;
-    grid-template-columns: 50% 50%;
+.main-actions .button {
+    border: none;
+    font-family: Roboto;
+    border-right: 1px solid#3F51B5;
+    border-left: 1px solid#3F51B5;
 }
 
-.actions__sign-in {
-    cursor: pointer;
-    flex: 1 1 auto;
-    background-color: #66BB6A;
-    transition: all 0.2s ease-in;
-}
-.actions__sign-in::after {
-    content: "Sign in";
-    width: 100%;
-    height: 200px;
+.button {
+    border: none;
     background: transparent;
-    color: #F5F5F5;
-    transform-origin: bottom left;
-    transform: skew(-28deg,0deg);
-    font-size: 74px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 22px;
+    outline: none;
+    position: relative;
+    display: inline-block;
+    line-height: 50px;
+    padding: 0 16px;
     text-transform: uppercase;
     font-weight: 500;
-}
-.actions__sign-in:hover {
-    background-color: #43A047;
-}
-
-.actions__sign-up {
     cursor: pointer;
-    flex: 1 1 auto;
-    background-color: #7E57C2;
-    transition: all 0.2s ease-in;
-}
-.actions__sign-up::after {
-    content: "Sign up";
-    width: 100%;
-    height: 200px;
-    background: #7E57C2;
-    color: #F5F5F5;
-    transform-origin: bottom left;
-    transform: skew(-28deg,0deg);
-    font-size: 74px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 22px;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: all 0.2s ease-in;
 }
 
-.actions__sign-up:hover {
-    background-color: #5E35B1;
-}
-.actions__sign-up:hover::after {
-    background-color: #5E35B1;
+.card {
+    box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3), 0 17px 17px 0 rgba(0, 0, 0, 0.15);
+    will-change: transform;
+    border-radius: 2px;
+    background-color: white;
 }
 
 .fade-in-enter.fade-in-enter-active {
