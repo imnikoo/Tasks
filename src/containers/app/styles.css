@@ -5,6 +5,9 @@
 
     background-color: #B3E5FC;
     width: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}

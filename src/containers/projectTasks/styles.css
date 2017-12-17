@@ -1,0 +1,97 @@
+.project-tasks {
+    height: 100%;
+}
+
+.manage-tasks-title {
+    font-family: Roboto;
+    font-size: 70px;
+    font-weight: bold;
+    display: -ms-flexbox;
+    display: flex;
+    flex-flow: column;
+    line-height: 1;
+    text-transform: uppercase;
+    font-style: oblique;
+    padding-bottom: 16px;
+}
+
+.form-add-task .form-header {
+    padding: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #303F9F;
+
+    background-color: #3F51B5;
+    color: white;
+
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+
+.tasks-header {
+    padding: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #303F9F;
+
+    background-color: #3F51B5;
+    color: white;
+
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.task {
+    display: grid;
+    grid-template-columns: 25% 15% 15% 12% 12% auto;
+    padding: 8px;
+
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.task-programmer {
+    justify-self: end;
+}
+
+.task-list-header {
+    display: grid;
+    grid-template-columns: 25% 15% 15% 12% 12% auto;
+    padding: 8px;
+
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.form-add-task {
+    display: flex;
+    flex-flow: column;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.form-select {
+    font-size: 18px;
+    padding: 10px 10px 10px 2px;
+    margin: 22px 0 22px 0;
+    display: block;
+    border: none;
+    width: 80%;
+    color: #999;
+    border-bottom: 1px solid #757575;
+}
+
+.form-select:focus {
+    outline: none;
+}
+
+.form-select option {
+    color: black;
+}
+.form-select option:disabled {
+    color: #999;
+}
+
+.selected {
+    color: black;
+}
+

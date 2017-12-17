@@ -1,80 +1,94 @@
-/**
- * Created by ASUS on 17/12/06.
- */
 import React, {Component} from 'react';
 import './styles.css';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import Input from "../../components/Input/index";
+import classnames from 'classnames';
+import * as _ from 'lodash';
+import {staff_programmer_save_request, staff_request_all} from "../../actions/staff";
+import {goBack} from "react-router-redux";
+import ProgrammersList from "../../components/ProgrammersList/index";
+import Form from "../../components/Form/index";
 
 class Staff extends Component {
    constructor(props, context) {
       super(props, context);
+      
+      this.state = {
+         firstName: '',
+         lastName: '',
+         formLimited: true
+      };
+      
+      this.handleInputChange = this.handleInputChange.bind(this);
    }
-
+   
+   componentDidMount() {
+      this.props.requestAll();
+   };
+   
+   handleInputChange = (event) => {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+      
+      this.setState({
+         [name]: value
+      });
+   };
+   
+   handleCreateNewProgrammer = () => {
+      let {firstName, lastName} = this.state;
+      let newProgrammer = {firstName, lastName};
+      this.props.saveProgrammer(newProgrammer)
+         .then(() => {
+            this.setState((prevState) => {
+               return {
+                  ...prevState,
+                  firstName: '',
+                  lastName: ''
+               }
+            })
+         });
+   };
+   
    render() {
       return (
          <div className="staff">
             <span className="manage-staff-title">Manage your staff</span>
-
-            <div className="form-add-programmer card">
-               <span className="form-header">New programmer</span>
-               <div className="form-inputs">
-                  <Input label={'First name'}/>
-                  <Input label={'Last name'}/>
-               </div>
-               <button className="button button-add-programmer">Add</button>
+            <Form title="New programmer" handleAddClick={this.handleCreateNewProgrammer}
+                  isPending={this.props.isPending}>
+               <Input type="text" name="firstName" onChange={this.handleInputChange} value={this.state.firstName}
+                      label={'First name'}/>
+               <Input type="text" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}
+                      label={'Last name'}/>
+            </Form>
+            <ProgrammersList programmers={this.props.programmers}/>
+            <div className="staff-actions card">
+               <button className="button" onClick={this.props.goBack}>
+                  <i className="material-icons">arrow_back</i>
+                  Back
+               </button>
+               <button className="button">
+                  <i className="material-icons">work</i>
+                  To projects
+               </button>
             </div>
-
-            <div className="all-programmers-container card">
-               <span className="list-header">Available programmers</span>
-               <div className="all-programmers-list">
-                  <div className="list-table-header">
-                     <span className="programmer-index">#</span>
-                     <span className="programmer-first-name">First name</span>
-                     <span className="programmer-last-name">Last name</span>
-                  </div>
-                  <div className="programmer">
-                     <span className="programmer-index">1</span>
-                     <span className="programmer-first-name">Albal</span>
-                     <span className="programmer-last-name">Kalamov</span>
-                     <input className="programmer-check" name="isGoing" type="checkbox" />
-                  </div>
-                  <div className="programmer">
-                     <span className="programmer-index">2</span>
-                     <span className="programmer-first-name">Kalbas</span>
-                     <span className="programmer-last-name">Namirov</span>
-                     <input className="programmer-check" name="isGoing" type="checkbox" />
-                  </div>
-                  <div className="programmer">
-                     <span className="programmer-index">3</span>
-                     <span className="programmer-first-name">Akarak</span>
-                     <span className="programmer-last-name">Muhambalov</span>
-                     <input className="programmer-check" name="isGoing" type="checkbox" />
-                  </div>
-                  <div className="programmer">
-                     <span className="programmer-index">4</span>
-                     <span className="programmer-first-name">Gilgokomek</span>
-                     <span className="programmer-last-name">Sobaka</span>
-                     <input className="programmer-check" name="isGoing" type="checkbox" />
-                  </div>
-                  <div className="programmer">
-                     <span className="programmer-index">5</span>
-                     <span className="programmer-first-name">6yP9</span>
-                     <span className="programmer-last-name">B CTaKaHE</span>
-                     <input className="programmer-check" name="isGoing" type="checkbox" />
-                  </div>
-               </div>
-            </div>
+         
          </div>
       );
    }
 }
 
 const mapStateToProps = state => ({
+   programmers: state.staff.programmers,
+   isPending: state.staff.isPending
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+   goBack,
+   requestAll: staff_request_all,
+   saveProgrammer: staff_programmer_save_request
 }, dispatch);
 
 export default connect(

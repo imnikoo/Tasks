@@ -27,14 +27,10 @@ class Input extends Component {
    };
 
    render() {
-      let {type, name, value, onChange, label, validationMessage} = this.props;
+      let { label, validationMessage} = this.props;
       return (<div className="input-group">
          <input
-            type={type}
-            name={name}
-            value={value}
-            onChange={onChange}
-            onBlur={this.validate}
+            {...this.props}
             className={classnames({ 'input-invalid': !this.state.isValid })}
             required
          />

@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
+let Programmer = require('./programmer').schema;
 
 let TaskScheme = new Schema (
    {
@@ -10,7 +11,7 @@ let TaskScheme = new Schema (
       editedAt: { type: Date },
       plannedDeadline: { type: Date, required: true},
       actualDeadline: { type: Date },
-      programmerId: { type: String },
+      programmer: { type: Programmer },
    }
 );
 

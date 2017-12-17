@@ -1,0 +1,52 @@
+.form-add {
+    display: flex;
+    flex-flow: column;
+
+    transition: max-height 0.3s ease-in;
+}
+
+.form-add--limited {
+    overflow: hidden;
+    max-height: 50px;
+}
+
+.form-add--full {
+    max-height: 300px;
+}
+
+.form-add--max-height {
+    max-height: inherit;
+}
+
+.form-header {
+    padding: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #E0E0E0;
+
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-header > i {
+    margin: 4px 0 4px 4px;
+    will-change: rotate;
+    transition: transform 0.2s ease-in;
+}
+
+.form-inputs {
+    padding: 8px;
+    border-bottom: 1px solid #E0E0E0;
+    display: flex;
+    flex-flow: column;
+}
+
+.icon-add--limited {
+    transform: rotate(0);
+}
+
+.icon-add--full {
+    transform: rotate(45deg);
+}

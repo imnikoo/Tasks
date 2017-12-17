@@ -1,0 +1,37 @@
+.projects {
+    width: 70%;
+}
+
+.projects-header {
+    padding: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #303F9F;
+
+    background-color: #3F51B5;
+    color: white;
+
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.projects-list .project {
+    display: grid;
+    grid-template-columns: 30% 20% 15% 15% auto;
+    border-bottom: 1px solid #E0E0E0;
+
+    padding: 8px;
+}
+
+.project-list-header {
+    display: grid;
+    grid-template-columns: 30% 20% 15% 15% auto;
+    padding: 8px;
+    font-weight: 500;
+    border-bottom: 1px solid #BDBDBD;
+
+}
+
+.project-started-at {
+    justify-self: end;
+}

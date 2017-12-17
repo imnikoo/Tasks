@@ -1,0 +1,29 @@
+.all-programmers-container {
+    display: flex;
+    flex-flow: column;
+    margin-top: 8px;
+}
+
+.all-programmers-container .programmer {
+    font-size: 20px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #E0E0E0;
+    transition: background-color 0.1s ease-in;
+}
+
+.programmer:hover {
+    background-color: #C5CAE9;
+}
+
+.programmer-name {
+    margin-left: 16px;
+}
+
+.list-header {
+    padding: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #E0E0E0;
+}

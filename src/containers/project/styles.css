@@ -1,14 +1,13 @@
-.staff {
-    width: 55%;
-    height: 80%;
+.project-container {
+    height: 100%;
 }
-
-.manage-staff-title {
+.project-title {
     font-family: Roboto;
     font-size: 70px;
     font-weight: bold;
     display: -ms-flexbox;
     display: flex;
+    -ms-flex-flow: column;
     flex-flow: column;
     line-height: 1;
     text-transform: uppercase;
@@ -16,14 +15,19 @@
     padding-bottom: 16px;
 }
 
-.staff-actions {
+.form-add-project {
     display: flex;
-    justify-content: space-between;
-
-    margin-top: 8px;
+    flex-flow: column;
 }
 
-.staff-actions .button {
+
+.project-actions {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-actions .button {
     display: flex;
     align-items: center;
     font-size: 18px;
