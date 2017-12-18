@@ -6,7 +6,7 @@ import Input from "../../components/Input/index";
 import classnames from 'classnames';
 import * as _ from 'lodash';
 import {staff_programmer_save_request, staff_request_all} from "../../actions/staff";
-import {goBack} from "react-router-redux";
+import {goBack, push} from "react-router-redux";
 import ProgrammersList from "../../components/ProgrammersList/index";
 import Form from "../../components/Form/index";
 
@@ -69,7 +69,7 @@ class Staff extends Component {
                   <i className="material-icons">arrow_back</i>
                   Back
                </button>
-               <button className="button">
+               <button className="button" onClick={this.props.goToProjectPage}>
                   <i className="material-icons">work</i>
                   To projects
                </button>
@@ -88,7 +88,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
    goBack,
    requestAll: staff_request_all,
-   saveProgrammer: staff_programmer_save_request
+   saveProgrammer: staff_programmer_save_request,
+   goToProjectPage: () => push('/projects')
 }, dispatch);
 
 export default connect(

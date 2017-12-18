@@ -14,7 +14,8 @@ let ProjectScheme = new Schema (
       finishedAt: {type: Date},
       income: {type: Number},
       team: { type: [Programmer]}
-   }
+   },
+   { versionKey: false }
 );
 
 module.exports = mongoose.model('Project', ProjectScheme);

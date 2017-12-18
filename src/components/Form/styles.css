@@ -24,12 +24,19 @@
     padding: 8px;
     font-size: 22px;
     font-weight: 500;
-    border-bottom: 1px solid #E0E0E0;
 
     display: flex;
     flex: 0 0 auto;
     justify-content: space-between;
     align-items: center;
+
+    border-bottom: 1px solid #303F9F;
+    background-color: #3F51B5;
+    color: white;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    cursor: pointer;
+
 }
 
 .form-header > i {

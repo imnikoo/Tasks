@@ -1,6 +1,3 @@
-/**
- * Created by ASUS on 17/12/06.
- */
 import React, {Component} from 'react';
 import './styles.css';
 import {bindActionCreators} from "redux";
@@ -13,6 +10,18 @@ import ProgrammersList from "../../components/ProgrammersList/index";
 import {staff_request_all} from "../../actions/staff";
 import {project_request_all, project_save_request} from "../../actions/project";
 import moment from 'moment';
+import q from 'q';
+import {goBack, push} from "react-router-redux";
+
+const EMPTY_TASK = {
+   title: '',
+   status: '',
+   complexity: '',
+   createdAt: '',
+   plannedDeadline: '',
+   programmer: '',
+   programmerName: ''
+};
 
 class ProjectTasks extends Component {
    constructor(props) {
@@ -20,34 +29,33 @@ class ProjectTasks extends Component {
       this.state = {
          tasks: [],
          showProgrammersModal: false,
-         task: {
-            title: '',
-            status: '',
-            complexity: '',
-            createdAt: '',
-            plannedDeadline: '',
-            programmer: '',
-            programmerName: ''
-      }};
+         task: EMPTY_TASK
+      };
       
       this.handleInputChange = this.handleInputChange.bind(this);
       this.renderProgrammerChoosingModal = this.renderProgrammerChoosingModal.bind(this);
       this.handleProgrammerClick = this.handleProgrammerClick.bind(this);
       this.openProgrammerChoosingModal = this.openProgrammerChoosingModal.bind(this);
-      this.createNewTask = this.createNewTask.bind(this);
+      this.saveCreateTask = this.saveCreateTask.bind(this);
+      this.handleTaskClick = this.handleTaskClick.bind(this);
+      this.handleClearClick = this.handleClearClick.bind(this);
    }
    
    componentDidMount() {
+      let promises = [];
       if(this.props.programmersOutOfDate) {
-         this.props.fetchProgrammers();
+         promises.push(this.props.fetchProgrammers());
       }
+   
       if(this.props.projectsOutOfdate) {
-         this.props.fetchProjects().then(() => {
-            let projectId = this.props.match.params.id;
-            let project = _.find(this.props.projects, ['_id', projectId]);
-            this.setState({ project });
-         })
+         promises.push(this.props.fetchProjects());
       }
+   
+      q.all(promises).then(() => {
+         let projectId = this.props.match.params.id;
+         let project = _.find(this.props.projects, ['_id', projectId]);
+         this.setState({ project });
+      })
    }
    
    handleInputChange(event) {
@@ -69,12 +77,7 @@ class ProjectTasks extends Component {
       });
    }
 
-   openProgrammerChoosingModal() {
-      this.setState({
-         showProgrammersModal: true
-      })
-   }
-
+   
    handleProgrammerClick(selectedProgrammer) {
       let task = Object.assign({}, this.state.task, {
          programmer: selectedProgrammer,
@@ -86,34 +89,58 @@ class ProjectTasks extends Component {
       })
    }
 
-   createNewTask() {
+   saveCreateTask() {
       let task =  { ...this.state.task,
          createdAt: moment(this.state.task.createdAt).toISOString(),
          plannedDeadline: moment(this.state.task.plannedDeadline).toISOString()
       };
       let project = this.state.project;
-      project.tasks = [ ...project.tasks, task ];
-      this.props.saveProject(project).then(() => {
-         this.setState({
-            task: {
-               title: '',
-               status: '',
-               complexity: '',
-               createdAt: '',
-               plannedDeadline: '',
-               programmer: '',
-               programmerName: ''
+      
+      let newTasks;
+      if (task._id) {
+         newTasks = _.map(project.tasks, t => {
+            if(t._id !== task._id) {
+               return t;
             }
-         })
+            return {
+               ...t,
+               ...task
+            };
+         });
+      } else {
+         newTasks = [ ...project.tasks, task ];
+      }
+      
+      project.tasks = newTasks;
+      this.props.saveProject(project).then(() => {
+         let projectId = this.state.project._id;
+         let project = _.find(this.props.projects, ['_id', projectId]);
+         this.setState({ project, task: EMPTY_TASK });
       });
    }
-
-   renderBackdrop() {
-      if(this.state.showProgrammersModal) {
-         return <div className='backdrop show'/>
-      }
+   
+   handleClearClick() {
+      this.setState({
+         task: EMPTY_TASK
+      });
+   }
+   
+   handleTaskClick(selectedTask) {
+      this.setState({
+         task: {
+            ...selectedTask,
+            programmerName: `${selectedTask.programmer.firstName} ${selectedTask.programmer.lastName}`
+         }
+      })
    }
 
+   openProgrammerChoosingModal() {
+      this.setState({
+         showProgrammersModal: true
+      })
+   }
+   
+   
    renderProgrammerChoosingModal() {
       if(this.state.showProgrammersModal) {
          return <div className='modal-container'>
@@ -121,11 +148,18 @@ class ProjectTasks extends Component {
          </div>
       }
    }
+   
+   renderBackdrop() {
+      if(this.state.showProgrammersModal) {
+         return <div className='backdrop show'/>
+      }
+   }
 
    render() {
       if(!this.state.project) {
-         return null;
+         return <div>..Loading..</div>
       }
+      let formButtonTitle = this.state.task._id ? 'Save' : 'Add';
       return (
          <div className="project-tasks">
             <span className="manage-tasks-title">Manage your tasks</span>
@@ -144,19 +178,19 @@ class ProjectTasks extends Component {
                      <span className="task-programmer">Programmer</span>
                   </div>
                   {_.map(this.state.project.tasks, (task, key) =>
-                     <div className="task" key={task.key}>
+                     <div className="task" key={key} onClick={() => this.handleTaskClick(task) }>
                         <span className="task-title">{task.title}</span>
                         <span className="task-status">{task.status}</span>
                         <span className="task-complexity">{task.complexity}</span>
-                        <span className="task-created-at">{task.createdAt.substring(0, 10)}</span>
-                        <span className="task-planned-at">{task.plannedDeadline.substring(0, 10)}</span>
+                        <span className="task-created-at">{moment(task.createdAt).format('DD-MM-YYYY')}</span>
+                        <span className="task-planned-at">{moment(task.plannedDeadline).format('DD-MM-YYYY')}</span>
                         <span className="task-programmer">{task.programmer.firstName} {task.programmer.lastName}</span>
                      </div>
                   )}
                </div>
             </div>
    
-            <Form title="New task" handleAddClick={this.createNewTask} isPending={this.props.isPending}>
+            <Form title="New task" handleAddClick={this.saveCreateTask} isPending={this.props.isPending} buttonTitle={formButtonTitle} handleClearClick={this.handleClearClick}>
                <Input label={'Title'}  type="text" name="title"
                       onChange={this.handleInputChange} value={this.state.task.title}/>
    
@@ -164,7 +198,7 @@ class ProjectTasks extends Component {
                   <option value="" disabled>Status</option>
                   <option value="New">New</option>
                   <option value="InProgress">In progress</option>
-                  <option value="Finished">Finished</option>
+                  <option value="Completed">Completed</option>
                </select>
    
                <Input name="complexity" type="number"
@@ -185,13 +219,14 @@ class ProjectTasks extends Component {
             </Form>
             
             <div className="staff-actions card">
-               <button className="button">
+               <button className="button" onClick={this.props.goBack}>
                   <i className="material-icons">arrow_back</i>
                   Back
                </button>
-               <button className="button">
-                  <i className="material-icons">save</i>
-                  Save</button>
+               <button className="button" onClick={() => this.props.goToProject(this.state.project._id)}>
+                  <i className="material-icons">mode_edit</i>
+                  Edit project
+               </button>
             </div>
 
             {this.renderProgrammerChoosingModal()}
@@ -204,7 +239,6 @@ class ProjectTasks extends Component {
 const mapStateToProps = state => ({
    projects: state.project.projects,
    projectsOutOfdate: state.project.outOfDate,
-
    programmers: state.staff.programmers,
    programmersOutOfDate: state.staff.outOfDate
 });
@@ -212,7 +246,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
    fetchProgrammers: staff_request_all,
    fetchProjects: project_request_all,
-   saveProject: project_save_request
+   saveProject: project_save_request,
+   goBack,
+   goToProject: projectId => push(`/project/${projectId}`)
 }, dispatch);
 
 export default connect(

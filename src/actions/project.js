@@ -42,8 +42,8 @@ export const PROJECT_SAVE_REQUEST = 'project/PROJECT_SAVE_REQUEST';
 export const project_save_request = (newProject) => {
    return dispatch => {
       dispatch({ type: PROJECT_SAVE_REQUEST });
-      let method = newProject.id ? 'put' : 'post';
-      let projectId = newProject.id || '';
+      let method = newProject._id ? 'put' : 'post';
+      let projectId = newProject._id || '';
       return http({
          method,
          url: `api/project/${projectId}`,

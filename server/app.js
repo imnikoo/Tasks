@@ -12,9 +12,9 @@ let options = {
    useMongoClient: true,
 };
 if (process.env.NODE_ENV === 'test') {
-   mongoose.connect('mongodb://localhost/testtasks1', options);
+   mongoose.connect('mongodb://localhost/testtasks2', options);
 } else {
-   mongoose.connect('mongodb://localhost/devtasks1', options);
+   mongoose.connect('mongodb://localhost/devtasks2', options);
    app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 }
 

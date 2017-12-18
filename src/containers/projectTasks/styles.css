@@ -57,19 +57,22 @@
 
 .task {
     display: grid;
-    grid-template-columns: 25% 15% 15% 12% 12% auto;
+    grid-template-columns: 23% 15% 15% 15% 12% auto;
     padding: 8px;
 
     border-bottom: 1px solid #E0E0E0;
 }
-
+.task:hover {
+    cursor: pointer;
+    background-color: #E8EAF6;
+}
 .task-programmer {
     justify-self: end;
 }
 
 .task-list-header {
     display: grid;
-    grid-template-columns: 25% 15% 15% 12% 12% auto;
+    grid-template-columns: 23% 15% 15% 15% 12% auto;
     padding: 8px;
 
     border-bottom: 1px solid #E0E0E0;

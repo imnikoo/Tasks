@@ -25,6 +25,7 @@ class Projects extends Component {
    render() {
       return (
          <div className="projects">
+            <div className="projects-title">Choose your project</div>
             <div className="projects-container card">
                <div className="projects-header">Projects</div>
                <div className="project-list-header">
@@ -35,8 +36,8 @@ class Projects extends Component {
                   <span className="project-started-at">Started at</span>
                </div>
                <div className="projects-list">
-                  {_.map(this.props.projects, p =>
-                     <div className="project" key={p._id} onClick={() => this.goToProjectTasks(p)}>
+                  {_.map(this.props.projects, (p, key) =>
+                     <div className="project" key={key} onClick={() => this.goToProjectTasks(p)}>
                         <span className="project-name">{p.name}</span>
                         <span className="project-client">{p.client}</span>
                         <span className="project-type">{p.projectType}</span>

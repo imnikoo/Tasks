@@ -12,7 +12,8 @@ let TaskScheme = new Schema (
       plannedDeadline: { type: Date, required: true},
       actualDeadline: { type: Date },
       programmer: { type: Programmer },
-   }
+   },
+   { versionKey: false }
 );
 
 module.exports = mongoose.model('Task', TaskScheme);
