@@ -12,6 +12,7 @@ import {project_request_all, project_save_request} from "../../actions/project";
 import ProgrammersList from "../../components/ProgrammersList/index";
 import {staff_request_all} from "../../actions/staff";
 import * as _ from 'lodash';
+import {goBack} from "react-router-redux";
 
 
 class Project extends Component {
@@ -108,7 +109,7 @@ class Project extends Component {
             <ProgrammersList programmers={this.state.availableProgrammers} handleClick={this.handleProgrammerClick}/>
             
             <div className="project-actions card">
-               <button className="button"><i className="material-icons">arrow_back</i>Back</button>
+               <button className="button"><i className="material-icons" onClick={this.props.goBack}>arrow_back</i>Back</button>
                <button className="button"><i className="material-icons">done</i>Create project</button>
             </div>
          
@@ -127,7 +128,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
    saveNewProject: project_save_request,
    fetchProjects: project_request_all,
-   fetchProgrammers: staff_request_all
+   fetchProgrammers: staff_request_all,
+   goBack
 }, dispatch);
 
 export default connect(

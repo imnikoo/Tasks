@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
          let isThereSuchProgrammer = _.some(state.programmers, p => {
             return p._id === action.payload._id
          });
-         if (!isThereSuchProgrammer) {
+         if (isThereSuchProgrammer) {
             let newProgrammers = _.map(state.programmers, p => {
                if (p._id !== action.payload._id) {
                   return p;
@@ -55,6 +55,7 @@ export default (state = initialState, action) => {
             });
             return {
                ...state,
+               isPending: false,
                programmers: newProgrammers
             }
          } else {

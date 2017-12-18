@@ -1,6 +1,8 @@
 .form-add {
     display: flex;
     flex-flow: column;
+    overflow: hidden;
+    margin-top: 8px;
 
     transition: max-height 0.3s ease-in;
 }

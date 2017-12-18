@@ -15,6 +15,7 @@
     "classnames": "^2.2.5",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
+    "moment": "^2.20.0",
     "mongoose": "^4.13.4",
     "morgan": "^1.9.0",
     "node-cache": "^4.1.1",

@@ -6,6 +6,7 @@ import {
 const initialState = {
    projects: [],
    isPending: false,
+   outOfDate: true,
    error: ''
 };
 
@@ -21,6 +22,7 @@ export default (state = initialState, action) => {
          return {
             ...state,
             isPending: false,
+            outOfDate: false,
             projects: action.payload
          }
       }

@@ -34,8 +34,8 @@ class Start extends Component {
                         </span>
                     </div>
                    <div className="main-actions">
-                      <button className="button main-actions__new-project">New project</button>
-                      <button className="button main-actions__current-projects">Current projects</button>
+                      <button className="button main-actions__new-project" onClick={this.props.goToNewProjectPage}>New project</button>
+                      <button className="button main-actions__current-projects" onClick={this.props.goToCurrentProjectsPage}>Current projects</button>
                       <button className="button main-actions__manage-staff" onClick={this.props.goToManageStaffPage}>Manage staff</button>
                    </div>
                 </div>
@@ -56,7 +56,8 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     goBack,
-    //registrationPage: () => push('/registration'),
+    goToNewProjectPage: () => push('/project'),
+    goToCurrentProjectsPage: () => push('/projects'),
     goToManageStaffPage: () => push('/staff')
 }, dispatch);
 

@@ -9,27 +9,45 @@ import Input from "../../components/Input/index";
 import classnames from 'classnames';
 import * as _ from 'lodash';
 import Form from "../../components/Form/index";
-
+import ProgrammersList from "../../components/ProgrammersList/index";
+import {staff_request_all} from "../../actions/staff";
+import {project_request_all, project_save_request} from "../../actions/project";
+import moment from 'moment';
 
 class ProjectTasks extends Component {
    constructor(props) {
       super(props);
-      this.state = { tasks: [], task: {
-         title: '',
-         status: '',
-         complexity: '',
-         createdAt: '',
-         plannedDeadline: '',
-         programmer: ''
-      } };
+      this.state = {
+         tasks: [],
+         showProgrammersModal: false,
+         task: {
+            title: '',
+            status: '',
+            complexity: '',
+            createdAt: '',
+            plannedDeadline: '',
+            programmer: '',
+            programmerName: ''
+      }};
       
       this.handleInputChange = this.handleInputChange.bind(this);
+      this.renderProgrammerChoosingModal = this.renderProgrammerChoosingModal.bind(this);
+      this.handleProgrammerClick = this.handleProgrammerClick.bind(this);
+      this.openProgrammerChoosingModal = this.openProgrammerChoosingModal.bind(this);
+      this.createNewTask = this.createNewTask.bind(this);
    }
    
    componentDidMount() {
-      let projectId = this.props.match.params.id;
-      let project = _.find(this.props.projects, ['_id', projectId]);
-      this.setState({ ...project });
+      if(this.props.programmersOutOfDate) {
+         this.props.fetchProgrammers();
+      }
+      if(this.props.projectsOutOfdate) {
+         this.props.fetchProjects().then(() => {
+            let projectId = this.props.match.params.id;
+            let project = _.find(this.props.projects, ['_id', projectId]);
+            this.setState({ project });
+         })
+      }
    }
    
    handleInputChange(event) {
@@ -50,12 +68,68 @@ class ProjectTasks extends Component {
          task
       });
    }
-   
+
+   openProgrammerChoosingModal() {
+      this.setState({
+         showProgrammersModal: true
+      })
+   }
+
+   handleProgrammerClick(selectedProgrammer) {
+      let task = Object.assign({}, this.state.task, {
+         programmer: selectedProgrammer,
+         programmerName: `${selectedProgrammer.firstName} ${selectedProgrammer.lastName}`
+      });
+      this.setState({
+         showProgrammersModal: false,
+         task
+      })
+   }
+
+   createNewTask() {
+      let task =  { ...this.state.task,
+         createdAt: moment(this.state.task.createdAt).toISOString(),
+         plannedDeadline: moment(this.state.task.plannedDeadline).toISOString()
+      };
+      let project = this.state.project;
+      project.tasks = [ ...project.tasks, task ];
+      this.props.saveProject(project).then(() => {
+         this.setState({
+            task: {
+               title: '',
+               status: '',
+               complexity: '',
+               createdAt: '',
+               plannedDeadline: '',
+               programmer: '',
+               programmerName: ''
+            }
+         })
+      });
+   }
+
+   renderBackdrop() {
+      if(this.state.showProgrammersModal) {
+         return <div className='backdrop show'/>
+      }
+   }
+
+   renderProgrammerChoosingModal() {
+      if(this.state.showProgrammersModal) {
+         return <div className='modal-container'>
+            <ProgrammersList title={'Choose programmer'} programmers={this.state.project.team} handleClick={this.handleProgrammerClick}/>
+         </div>
+      }
+   }
+
    render() {
+      if(!this.state.project) {
+         return null;
+      }
       return (
          <div className="project-tasks">
             <span className="manage-tasks-title">Manage your tasks</span>
-            
+
             <div className="tasks-container card">
                <div className="tasks-header">
                   Tasks
@@ -69,8 +143,8 @@ class ProjectTasks extends Component {
                      <span className="task-planned-at">Planned at</span>
                      <span className="task-programmer">Programmer</span>
                   </div>
-                  {_.map(this.state.tasks, task =>
-                     <div className="task" key={task._id}>
+                  {_.map(this.state.project.tasks, (task, key) =>
+                     <div className="task" key={task.key}>
                         <span className="task-title">{task.title}</span>
                         <span className="task-status">{task.status}</span>
                         <span className="task-complexity">{task.complexity}</span>
@@ -107,8 +181,7 @@ class ProjectTasks extends Component {
                       onFocus={(e) => { e.target.type='date'; }}
                       onBlur={(e) => { e.target.type='text'; }}
                />
-              <Input label={'Programmer'} type="text" name="programmer"
-                      onChange={this.handleInputChange} value={this.state.task.programmer}/>
+              <Input label={'Programmer'} type="text" name="programmerName" value={this.state.task.programmerName} onClick={this.openProgrammerChoosingModal}/>
             </Form>
             
             <div className="staff-actions card">
@@ -120,16 +193,26 @@ class ProjectTasks extends Component {
                   <i className="material-icons">save</i>
                   Save</button>
             </div>
-         
+
+            {this.renderProgrammerChoosingModal()}
+            {this.renderBackdrop()}
          </div>
       );
    }
 }
 
 const mapStateToProps = state => ({
+   projects: state.project.projects,
+   projectsOutOfdate: state.project.outOfDate,
+
+   programmers: state.staff.programmers,
+   programmersOutOfDate: state.staff.outOfDate
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+   fetchProgrammers: staff_request_all,
+   fetchProjects: project_request_all,
+   saveProject: project_save_request
 }, dispatch);
 
 export default connect(

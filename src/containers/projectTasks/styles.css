@@ -2,6 +2,19 @@
     height: 100%;
 }
 
+.modal-container {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    z-index: 10;
+}
+
+.project-tasks .backdrop {
+    left: 0;
+    top: 0;
+}
+
 .manage-tasks-title {
     font-family: Roboto;
     font-size: 70px;
