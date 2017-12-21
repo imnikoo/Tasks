@@ -9,8 +9,8 @@ const ProgrammersList = (props) => {
       <div className="all-programmers-container card">
          <span className="list-header">{title}</span>
          <div className="all-programmers-list">
-            {_.map(props.programmers, programmer =>
-               <div className="programmer" key={programmer._id} onClick={() => handleClick(programmer)}>
+            {_.map(props.programmers, (programmer, key) =>
+               <div className="programmer" key={key} onClick={() => handleClick(programmer)}>
                   <i className="material-icons">person</i>
                   <span className="programmer-name">{programmer.firstName} {programmer.lastName}</span>
                </div>

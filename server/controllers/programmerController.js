@@ -26,7 +26,8 @@ const post = (req, res) => {
    let newProgrammer = new Programmer();
    newProgrammer.firstName = req.body.firstName;
    newProgrammer.lastName = req.body.lastName;
-   
+   newProgrammer.position = req.body.position;
+
    newProgrammer.save()
       .then(programmer => res.status(200).send(programmer))
       .catch(err => res.send(err));

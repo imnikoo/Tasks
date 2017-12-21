@@ -17,6 +17,7 @@ class Staff extends Component {
       this.state = {
          firstName: '',
          lastName: '',
+         position: '',
          formLimited: true
       };
       
@@ -38,15 +39,16 @@ class Staff extends Component {
    };
    
    handleCreateNewProgrammer = () => {
-      let {firstName, lastName} = this.state;
-      let newProgrammer = {firstName, lastName};
+      let { firstName, lastName, position } = this.state;
+      let newProgrammer = {firstName, lastName, position};
       this.props.saveProgrammer(newProgrammer)
          .then(() => {
             this.setState((prevState) => {
                return {
                   ...prevState,
                   firstName: '',
-                  lastName: ''
+                  lastName: '',
+                  position: ''
                }
             })
          });
@@ -56,12 +58,14 @@ class Staff extends Component {
       return (
          <div className="staff">
             <span className="manage-staff-title">Manage your staff</span>
-            <Form title="New programmer" handleAddClick={this.handleCreateNewProgrammer}
+            <Form buttonTitle={'Add'} title="New programmer" handleAddClick={this.handleCreateNewProgrammer}
                   isPending={this.props.isPending}>
                <Input type="text" name="firstName" onChange={this.handleInputChange} value={this.state.firstName}
                       label={'First name'}/>
                <Input type="text" name="lastName" onChange={this.handleInputChange} value={this.state.lastName}
                       label={'Last name'}/>
+               <Input type="text" name="position" onChange={this.handleInputChange} value={this.state.position}
+                      label={'Position'}/>
             </Form>
             <ProgrammersList programmers={this.props.programmers}/>
             <div className="staff-actions card">
